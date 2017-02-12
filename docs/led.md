@@ -43,36 +43,25 @@ Pythonを使ってLEDを点灯させるプログラム led.py を作成します
 ```python
 #!/usr/bin/env python
 
-import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO    # RPi.GPIOパッケージのインポート
 import time
 
-if __name__ == ("__main__"):
+if __name__ == "__main__":
 
-  #start
-  LED1 = 4 # LED1 --> GPIO7
+  LED1 = 18 # LED1 --> GPIO1(BCM:18,Physical:12)
 
-  GPIO.setmode(GPIO.BCM) # use GPIO Number
-  GPIO.setup(LED1, GPIO.OUT) # set GPIO led output
+  GPIO.setmode(GPIO.BCM) # BCMのポート番号を使用
+  GPIO.setup(LED1, GPIO.OUT) # GPIO1番を出力に設定
 
-  GPIO.output(LED1, GPIO.HIGH)
+  GPIO.output(LED1, GPIO.HIGH) # ポートにHighの信号を出力(LEDが点灯します)
   time.sleep(2)
 
-  GPIO.output(LED1, GPIO.LOW)
+  GPIO.output(LED1, GPIO.LOW) # ポートにLowの信号を出力(LEDが消灯します)
 
-  GPIO.cleanup()
+  GPIO.cleanup() # GPIOポートの撤収処理
 ```
 
-* RPi.GPIOモジュールを使用して、GPIOポートを制御します。
-* LED1にはGPIO番号(BCM)を指定します。
-* GPIO.setmode(GPIO.BCM) で、BCMのポート番号を使う設定にします。
-* GPIO.setup(LED1, GPIO.OUT) で、GPIO7番ポートを出力設定にします。
-* GPIO.output(LED1, GPIO.HIGH) で、ポートにHighの信号を出力します。
-(LEDが点灯します。)
-* GPIO.output(LED1, GPIO.LOW) で、ポートにLowの信号を出力します。
-(LEDが消灯します。)
-* GPIO.cleanup() で、GPIOポートの撤収処理を行います。
-
-led.pyを実行してみましょう。
+led.pyを実行してみましょう。ターミナルから以下のように実行します。
 ```bash
 $ python led.py
 ```
@@ -80,15 +69,38 @@ $ python led.py
 * LEDが2秒点灯して終了します。
 
 ## 抵抗値の求め方
+今回は1kΩの抵抗を使用しましたが、使用するLEDの特性に合わせて抵抗値を算出する必要があります。
 
+_抵抗値の計算式_
+> ( 電源電圧[Ｖ] － 順方向電圧降下[Ｖ] ) ÷ 順方向電流[Ａ] ＝ 抵抗値[Ω]
 
+今回使用しているLEDは以下のものです。
 
-## ブレッドボードの使い方
-ブレッドボードには、ミニブレッドボードと通常のブレッドボードの2種類があります。
-上に記載したブレッドボード配線図では、どちらも同じ配線になっていました。
+5mm赤色LED　ESL-R5A33ARCN114　
+http://akizukidenshi.com/catalog/g/gI-08359/
 
-2種類のブレッドボードの違いは、通常のブレッドボードには上下2列に＋と−の列があることです。
-これらを使うと、よりわかりやすく配線をすることができます。
+データシート
+http://akizukidenshi.com/download/ds/everstar/ESL-R5A33ARCN114.pdf
+
+順方向電圧降下 2.1[V]、標準電流 20[mA] となっています。
+実際には、電流は1mA程度流せば光るそうです。
+(20mAを流すと明るすぎて目を痛めるかもしれません。)
+
+電源電圧は3.3Vですので、これらの情報を元に抵抗値を計算します。
+
+> ( 3.3 - 2.1 ) / 0.001 = 1200
+
+1200[Ω] ≒ 1[1kΩ]
+
+1kΩの抵抗を使用すれば問題ないことがわかります。
+抵抗値はそこまで神経質にならなくても大丈夫ですが、抵抗は必ず接続してください。
+電流が流れすぎるとLEDが壊れる可能性があります。
+
+秋月電子通商「LED・抵抗の計算式」　
+http://akizukidenshi.com/download/led-r-calc.pdf
+
+マルツオンライン「LED基本ガイド」
+http://www.marutsu.co.jp/pc/static/large_order/led
 
 
 ## 電子回路図作成ツール Fritzing
