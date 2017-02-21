@@ -37,8 +37,9 @@
 GPIOポートの18番ピンに、抵抗、LEDが接続されています。
 
 ## 制御プログラムの作成
+### LED点灯プログラム
 
-Pythonを使ってLEDを点灯させるプログラム led.py を作成します。
+Pythonを使ってLEDを点灯させるプログラム led_on.py を作成します。
 
 ```python
 #!/usr/bin/env python
@@ -61,12 +62,108 @@ if __name__ == "__main__":
   GPIO.cleanup()    # GPIOポートの撤収処理
 ```
 
-led.pyを実行してみましょう。ターミナルから以下のように実行します。
+led_on.pyを実行してみましょう。ターミナルから以下のように実行します。
 ```bash
-$ python led.py
+$ python led_on.py
 ```
 
 * LEDが2秒点灯して終了します。
+　
+
+### LED点滅プログラム
+
+次にLEDを点滅させるプログラム led_blink.py を作成します。
+
+```python
+#! /usr/bin/env python
+
+import RPi.GPIO as GPIO    # RPi.GPIOパッケージのインポート
+import time
+
+if __name__ == ("__main__"):
+
+  LED1 = 18    # LED1 --> GPIO1(BCM:18,Physical:12)
+
+  GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
+  GPIO.setup(LED1, GPIO.OUT)     # GPIO1番を出力に設定
+
+  try:
+    while True:
+
+      # 1秒点滅
+      GPIO.output(LED1, GPIO.HIGH)    # ポートにHighの信号を出力(LEDが点灯します)
+      time.sleep(1)
+
+      GPIO.output(LED1, GPIO.LOW)    # ポートにLowの信号を出力(LEDが消灯します)
+      time.sleep(1)
+
+  # ctrl+c を受け取った場合
+  except KeyboardInterrupt:
+      print ('key interrupt')
+
+  GPIO.cleanup()    # GPIOポートの撤収処理
+```
+　
+led_blink.pyを実行してみましょう。ターミナルから以下のように実行します。
+```bash
+$ python led_blink.py
+```
+
+* LEDが1秒ごとに点滅します。ctrl+c のキー入力で終了します。
+　
+
+### PWMを使ったLEDの明るさ制御
+ここまではHigh/Lowの制御のみで、LEDは点灯/消灯のどちらかの状態になっていました。
+これをデジタル出力と言います。
+
+一方、アナログ出力(PWM制御)では、LEDの点灯時の明るさを変更することができます。
+Raspberry PiのGPIOポートでは、ソフトウェアPWMを使用することができます。
+
+LEDの明るさを変更するプログラム led_pwm.py を作成してみましょう。
+
+```python
+#! /usr/bin/env python
+
+import RPi.GPIO as GPIO
+import time
+
+if __name__ == ("__main__"):
+
+  LED1 = 18    # LED1 --> GPIO1(BCM:18,Physical:12)
+
+  GPIO.setmode(GPIO.BCM)
+  GPIO.setup(LED1, GPIO.OUT)
+  GPIO.output(LED1, GPIO.LOW)
+
+  p18 = GPIO.PWM(LED1, 100)    # LED1の周波数設定(100Hz)
+  p18.start(0)    # デューティ比 0 でPWM出力開始
+
+  try:
+    while 1:
+      # 0〜100まで10段階でデューティ比を設定(プラス方向)
+      for dc in range(0, 100, 10):
+        p18.ChangeDutyCycle(dc)
+        time.sleep(0.5)
+
+      # 100〜0まで10段階でデューティ日を設定(マイナス方向)
+      for dc in range(100, 0, -10):
+        p18.ChangeDutyCycle(dc)
+        time.sleep(0.5)
+
+  except KeyboardInterrupt:
+      print ('key interrupt')
+
+  p18.stop()    # PWM出力を停止
+
+  GPIO.cleanup()
+```
+
+led_pwm.pyを実行してみましょう。ターミナルから以下のように実行します。
+```bash
+$ python led_pwm.py
+```
+
+* LEDの明るさが10段階で変化します。ctrl+c のキー入力で終了します。
 
 ## 抵抗値の求め方
 今回は1kΩの抵抗を使用しましたが、使用するLEDの特性に合わせて抵抗値を算出する必要があります。
