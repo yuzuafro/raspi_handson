@@ -14,6 +14,7 @@
 
 ![breadboard_buzzer](img/RPi3_breadboard_buzzer.png) 
 
+(図が欲しい)
 1. 配線図と同じ向きにRaspberry Piとブレッドボードを並べます。
 2. 圧電サウンダをブレッドボードに差し込みます。
 3. 抵抗をブレッドボードに差し込みます。向きはどちらでもよいです。
@@ -31,6 +32,7 @@
 
 ```python
 #! /usr/bin/env python
+# coding:utf-8
 
 import RPi.GPIO as GPIO
 import time
@@ -66,6 +68,7 @@ $ python buzzer.py
 
 ```python
 #! /usr/bin/env python
+# coding:utf-8
 
 import time
 import RPi.GPIO as GPIO

@@ -4,7 +4,7 @@
 ### 必要なもの
 
 * LED
-* 抵抗(1KΩ)
+* 抵抗(1KΩ) 1本
 * ブレッドボード
 * ジャンパワイヤー(メスオス) 2本
 
@@ -43,6 +43,7 @@ Pythonを使ってLEDを点灯させるプログラム led_on.py を作成しま
 
 ```python
 #!/usr/bin/env python
+# coding:utf-8
 
 import RPi.GPIO as GPIO    # RPi.GPIOパッケージのインポート
 import time
@@ -76,6 +77,7 @@ $ python led_on.py
 
 ```python
 #! /usr/bin/env python
+# coding:utf-8
 
 import RPi.GPIO as GPIO    # RPi.GPIOパッケージのインポート
 import time
@@ -123,6 +125,7 @@ LEDの明るさを変更するプログラム led_pwm.py を作成します。
 
 ```python
 #! /usr/bin/env python
+# coding:utf-8
 
 import RPi.GPIO as GPIO
 import time
@@ -145,7 +148,7 @@ if __name__ == ("__main__"):
         p18.ChangeDutyCycle(dc)
         time.sleep(0.5)
 
-      # 100〜0まで10段階でデューティ日を設定(マイナス方向)
+      # 100〜0まで10段階でデューティ比を設定(マイナス方向)
       for dc in range(100, 0, -10):
         p18.ChangeDutyCycle(dc)
         time.sleep(0.5)
