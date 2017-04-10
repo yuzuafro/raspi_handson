@@ -1,0 +1,8 @@
+Do,Do,Do,Re,Mi,Mi,Mi,Do,Mi,Mi,Do,Do,Mi,Mi,Mi,Mi,
+Re,Re,Re,Mi,Fa,Fa,Mi,Re,Fa,Fa,Fa,Fa,Fa,Fa,Fa,Fa,
+Mi,Mi,Mi,Fa,So,So,So,Mi,So,So,Mi,Mi,So,So,So,So,
+Fa,Fa,Fa,So,Lah,Lah,So,Fa,Lah,Lah,Lah,Lah,Lah,Lah,Lah,Lah,
+So,So,So,Do,Re,Mi,Fa,So,Lah,Lah,Lah,Lah,Lah,Lah,Lah,Lah,
+Lah,Lah,Lah,Re,Mi,Fa,So,Lah,Sih,Sih,Sih,Sih,Sih,Sih,Sih,Sih,
+Sih,Sih,Sih,Mi,Fa,So,Lah,Sih,Doh,Doh,Doh,Doh,Doh,Doh,Doh,Sih,
+Lah,Lah,Fa,Fa,Sih,Sih,So,So,Doh,Doh,Doh,Doh,Doh,Doh,Doh,
