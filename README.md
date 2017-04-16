@@ -6,5 +6,6 @@
 - [事前準備(VNCを使用したリモートアクセスの設定)](docs/prepare_vnc.md)
 - [Raspberry Piを使った電子工作](docs/raspi_gpio.md)
 - [LEDを光らせる](docs/led.md)
+- [スイッチの押下を検出する](docs/switch.md)
 - [圧電サウンダで音を出す](docs/sound.md)
 - [さらに挑戦してみよう](docs/advanced.md)

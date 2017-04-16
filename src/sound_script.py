@@ -20,9 +20,9 @@ if __name__ == ("__main__"):
     print 'file "%s" is not found' % argv[1]
     quit()
 
-  BZ1 = 4    # BZ1 --> GPIO7
+  BZ1 = 4    # BZ1 --> GPIO7(BCM:4,Physical:7)
   GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
-  GPIO.setup(BZ1, GPIO.OUT)    # GPIO7番を出力に設定
+  GPIO.setup(BZ1, GPIO.OUT)    # BZ1を出力に設定
 
   tonename = ('La', 'La#', 'Si', 'Do', 'Do#', 'Re', 'Re#', 'Mi', 'Fa', 'Fa#', 'So', 'So#')
   toneall = ('La', 'La#', 'Si', 'Do', 'Do#', 'Re', 'Re#', 'Mi', 'Fa', 'Fa#', 'So', 'So#', 'Lah', 'La#h', 'Sih', 'Doh', 'Do#h', 'Reh', 'Re#h', 'Mih', 'Fah', 'Fa#h', 'Soh', 'So#h', 'Lahh')
