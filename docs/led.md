@@ -4,15 +4,22 @@
 
 Pythonを使ってLEDを点灯させるプログラム led_on.py を作成します。
 
+まず適当なディレクトリを作成し、その中にファイルを作成していきましょう。
+
+```bash
+$ mkdir handson
+$ cd handson
+$ vi led_on.py
+```
+
 ```python
 #!/usr/bin/env python
 # coding:utf-8
 
-import RPi.GPIO as GPIO    # RPi.GPIOパッケージのインポート
 import time
+import RPi.GPIO as GPIO
 
-if __name__ == "__main__":
-
+def led_on():
   LED1 = 18    # LED1 --> GPIO1(BCM:18,Physical:12)
 
   GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
@@ -23,7 +30,10 @@ if __name__ == "__main__":
 
   GPIO.output(LED1, GPIO.LOW)    # ポートにLowの信号を出力(LEDが消灯します)
 
-  GPIO.cleanup()    # GPIOポートの撤収処理
+  GPIO.cleanup()
+
+if __name__ == "__main__":
+  led_on()
 ```
 
 led_on.pyを実行してみましょう。ターミナルから以下のように実行します。
@@ -40,15 +50,18 @@ OUTPUTモードでは、プログラム(CPU)からポートにHigh/Lowの信号�
 
 次にLEDを点滅させるプログラム led_blink.py を作成します。
 
+```bash
+$ vi led_blink.py
+```
+
 ```python
-#! /usr/bin/env python
+#!/usr/bin/env python
 # coding:utf-8
 
-import RPi.GPIO as GPIO    # RPi.GPIOパッケージのインポート
 import time
+import RPi.GPIO as GPIO    # RPi.GPIOパッケージのインポート
 
-if __name__ == ("__main__"):
-
+def led_blink():
   LED1 = 18    # LED1 --> GPIO1(BCM:18,Physical:12)
 
   GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
@@ -58,7 +71,8 @@ if __name__ == ("__main__"):
     while True:
 
       # 1秒点滅
-      GPIO.output(LED1, GPIO.HIGH)    # ポートにHighの信号を出力(LEDが点灯します)
+      GPIO.output(LED1, GPIO.HIGH)    # ポートにHighの信号を出力(LEDが点灯します
+)
       time.sleep(1)
 
       GPIO.output(LED1, GPIO.LOW)    # ポートにLowの信号を出力(LEDが消灯します)
@@ -69,6 +83,9 @@ if __name__ == ("__main__"):
       print ('key interrupt')
 
   GPIO.cleanup()    # GPIOポートの撤収処理
+
+if __name__ == "__main__":
+  led_blink()
 ```
 　
 led_blink.pyを実行してみましょう。ターミナルから以下のように実行します。
@@ -88,15 +105,18 @@ Raspberry PiのGPIOポートでは、ソフトウェアPWMを使用すること�
 
 LEDの明るさを変更するプログラム led_pwm.py を作成します。
 
+```bash
+$ vi led_pwm.py
+```
+
 ```python
-#! /usr/bin/env python
+#!/usr/bin/env python
 # coding:utf-8
 
-import RPi.GPIO as GPIO
 import time
+import RPi.GPIO as GPIO
 
-if __name__ == ("__main__"):
-
+def led_pwm():
   LED1 = 18    # LED1 --> GPIO1(BCM:18,Physical:12)
 
   GPIO.setmode(GPIO.BCM)
@@ -113,7 +133,7 @@ if __name__ == ("__main__"):
         p18.ChangeDutyCycle(dc)
         time.sleep(0.5)
 
-      # 100〜0まで10段階でデューティ比を設定(マイナス方向)
+      # 100〜0まで10段階でデューティ日を設定(マイナス方向)
       for dc in range(100, 0, -10):
         p18.ChangeDutyCycle(dc)
         time.sleep(0.5)
@@ -124,6 +144,9 @@ if __name__ == ("__main__"):
   p18.stop()    # PWM出力を停止
 
   GPIO.cleanup()
+
+if __name__ == "__main__":
+  led_pwm()
 ```
 
 led_pwm.pyを実行してみましょう。ターミナルから以下のように実行します。

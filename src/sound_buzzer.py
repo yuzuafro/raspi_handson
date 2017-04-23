@@ -1,11 +1,10 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 # coding:utf-8
 
-import RPi.GPIO as GPIO
 import time
+import RPi.GPIO as GPIO
 
-if __name__ == ("__main__"):
-
+def buzzer():
   BZ1 = 4    # BZ1 --> GPIO7(BCM:4,Physical:7)
 
   GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
@@ -19,3 +18,6 @@ if __name__ == ("__main__"):
   buzzer.stop()    # PWM出力を停止
 
   GPIO.cleanup()    # GPIOポートの撤収処理
+
+if __name__ == "__main__":
+  buzzer()

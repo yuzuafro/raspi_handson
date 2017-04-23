@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content = "height = device-height, width = 420, user-scalable = no" />
+    <title>WebIOPi | Demo</title>
+    <script type="text/javascript" src="/webiopi.js"></script>
+    <script type="text/javascript">
+    webiopi().ready(function() {
+        var parts;
+        // 赤
+        parts = webiopi().createRatioSlider(18);
+        $("#red").append(parts);
+        //初期値を指定
+        $("#ratio18").val(0);
+    });
+    </script>
+    <style type="text/css">
+        input[type="range"] {
+            display: block;
+            width: 160px;
+            height: 45px;
+        }
+    </style>
+</head>
+<body>
+<div id="content" align="center">
+    <div id="red"><label>LED</label></div>
+</div>
+</body>
+</html>

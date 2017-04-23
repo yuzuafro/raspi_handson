@@ -4,14 +4,18 @@
 
 Pythonを使ってスイッチの押下を検出するプログラム switch.py を作成します。
 
+```bash
+$ vi switch.py
+```
+
 ```python
-#! /usr/bin/env python
+#!/usr/bin/env python
 # coding:utf-8
 
-import RPi.GPIO as GPIO
 import time
+import RPi.GPIO as GPIO
 
-if __name__ == ("__main__"):
+def switch():
   SW1 = 21    # SW1 --> GPIO29(BCM:21,Physical:40)
 
   GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
@@ -26,6 +30,9 @@ if __name__ == ("__main__"):
 
   except KeyboardInterrupt:
     GPIO.cleanup()
+
+if __name__ == "__main__":
+  switch()
 ```
 
 switch.pyを実行してみましょう。ターミナルから以下のように実行します。

@@ -1,11 +1,10 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 # coding:utf-8
 
-import RPi.GPIO as GPIO    # RPi.GPIOパッケージのインポート
 import time
+import RPi.GPIO as GPIO    # RPi.GPIOパッケージのインポート
 
-if __name__ == ("__main__"):
-
+def led_blink():
   LED1 = 18    # LED1 --> GPIO1(BCM:18,Physical:12)
 
   GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
@@ -26,3 +25,6 @@ if __name__ == ("__main__"):
       print ('key interrupt')
 
   GPIO.cleanup()    # GPIOポートの撤収処理
+
+if __name__ == "__main__":
+  led_blink()

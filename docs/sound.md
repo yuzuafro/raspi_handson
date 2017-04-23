@@ -3,20 +3,22 @@
 ### ラの音を出力するプログラム
 
 圧電サウンダを使って音を出すプログラム sound_buzzer.py を作成します。
+```bash
+$ vi sound_buzzer.py
+```
 
 ```python
-#! /usr/bin/env python
+#!/usr/bin/env python
 # coding:utf-8
 
-import RPi.GPIO as GPIO
 import time
+import RPi.GPIO as GPIO
 
-if __name__ == ("__main__"):
-
-  BZ1 = 4    # BZ1 --> GPIO7
+def buzzer():
+  BZ1 = 4    # BZ1 --> GPIO7(BCM:4,Physical:7)
 
   GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
-  GPIO.setup(BZ1, GPIO.OUT)    # GPIO7番を出力に設定
+  GPIO.setup(BZ1, GPIO.OUT)    # BZ1を出力に設定
   buzzer = GPIO.PWM(BZ1, 440)    # BZ1の周波数設定(440Hz)
 
   buzzer.start(50)    # デューティ比 50 でPWM出力開始
@@ -26,6 +28,9 @@ if __name__ == ("__main__"):
   buzzer.stop()    # PWM出力を停止
 
   GPIO.cleanup()    # GPIOポートの撤収処理
+
+if __name__ == "__main__":
+  buzzer()
 ```
 
 sound_buzzer.pyを実行してみましょう。ターミナルから以下のように実行します。
@@ -39,19 +44,21 @@ $ python sound_buzzer.py
 ### 音階を出力するプログラム
 
 次に、音階を出力するプログラム sound_octave.py を作成します。
+```bash
+$ vi sound_octave.py
+```
 
 ```python
-#! /usr/bin/env python
+#!/usr/bin/env python
 # coding:utf-8
 
 import time
 import RPi.GPIO as GPIO
 
-if __name__ == ("__main__"):
-
-  BZ1 = 4    # BZ1 --> GPIO7
+def octave():
+  BZ1 = 4    # BZ1 --> GPIO7(BCM:4,Physical:7)
   GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
-  GPIO.setup(BZ1, GPIO.OUT)    # GPIO7番を出力に設定
+  GPIO.setup(BZ1, GPIO.OUT)    # BZ1を出力に設定
 
   tonename = ['La', 'La#', 'Si', 'Do', 'Do#', 'Re', 'Re#', 'Mi', 'Fa', 'Fa#', 'So', 'So#']
 
@@ -67,6 +74,9 @@ if __name__ == ("__main__"):
 
   buzzer.stop()
   GPIO.cleanup()
+
+if __name__ == "__main__":
+  octave()
 ```
 
 sound_octave.pyを実行してみましょう。ターミナルから以下のように実行します。
@@ -78,19 +88,21 @@ $ python sound_octave.py
 ### ターミナルに入力した音を鳴らすプログラム
 
 ターミナルに入力したキーに応じて音を鳴らすプログラム sound_input.py を作成します。
+```bash
+$ vi sound_input.py
+```
 
 ```python
-#! /usr/bin/env python
+#!/usr/bin/env python
 # coding:utf-8
 
 import time
 import RPi.GPIO as GPIO
 
-if __name__ == ("__main__"):
-
-  BZ1 = 4    # BZ1 --> GPIO7
+def input():
+  BZ1 = 4    # BZ1 --> GPIO7(BCM:4,Physical:7)
   GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
-  GPIO.setup(BZ1, GPIO.OUT)    # GPIO7番を出力に設定
+  GPIO.setup(BZ1, GPIO.OUT)    # BZ1を出力に設定
 
   tonename = ('La', 'La#', 'Si', 'Do', 'Do#', 'Re', 'Re#', 'Mi', 'Fa', 'Fa#', 'So', 'So#')
   toneall = ('La', 'La#', 'Si', 'Do', 'Do#', 'Re', 'Re#', 'Mi', 'Fa', 'Fa#', 'So', 'So#', 'Lah', 'La#h', 'Sih', 'Doh', 'Do#h', 'Reh', 'Re#h', 'Mih', 'Fah', 'Fa#h', 'Soh', 'So#h', 'Lahh')
@@ -110,18 +122,24 @@ if __name__ == ("__main__"):
         buzzer.start(50)    # デューティ比 50 でPWM出力開始
         time.sleep(0.5)
         buzzer.stop()
-      else:
+      else: 
         print 'not found'
 
   except KeyboardInterrupt:
     print 'key interrupt'
 
   GPIO.cleanup()
+
+if __name__ == "__main__":
+  input()
 ```
 
 sound_input.pyを実行してみましょう。ターミナルから以下のように実行します。
 ```bash
 $ python sound_input.py
+Do  # Do と入力して Returnキー
+Re
+Lahh
 ```
 * キー入力待ち状態になります。Do、Re、Sih、So#h など好きな音をキー入力してみましょう。
   * 低いLa(La) から 高いLa(Lahh) までの2オクターブ分を準備しています。
@@ -130,22 +148,25 @@ $ python sound_input.py
 ### 音階のテキストファイルを入力して、音を鳴らすプログラム
 
 最後に、音階の書かれたテキストファイルを読み込んで、音を鳴らすプログラム sound_script.py を作成します。
+```bash
+$ vi sound_script.py
+```
 
 ```python
-#! /usr/bin/env python
+#!/usr/bin/env python
 # coding:utf-8
 
-import sys
+import sys 
 import os.path
 import time
 import RPi.GPIO as GPIO
 
-if __name__ == ("__main__"):
+def script():
   argv = sys.argv
   argc = len(argv)
 
   # 引数の確認
-  if (argc != 2):
+  if (argc != 2): 
     print 'usage: python %s filename' % argv[0]
     quit()
 
@@ -154,9 +175,9 @@ if __name__ == ("__main__"):
     print 'file "%s" is not found' % argv[1]
     quit()
 
-  BZ1 = 4    # BZ1 --> GPIO7
+  BZ1 = 4    # BZ1 --> GPIO7(BCM:4,Physical:7)
   GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
-  GPIO.setup(BZ1, GPIO.OUT)    # GPIO7番を出力に設定
+  GPIO.setup(BZ1, GPIO.OUT)    # BZ1を出力に設定
 
   tonename = ('La', 'La#', 'Si', 'Do', 'Do#', 'Re', 'Re#', 'Mi', 'Fa', 'Fa#', 'So', 'So#')
   toneall = ('La', 'La#', 'Si', 'Do', 'Do#', 'Re', 'Re#', 'Mi', 'Fa', 'Fa#', 'So', 'So#', 'Lah', 'La#h', 'Sih', 'Doh', 'Do#h', 'Reh', 'Re#h', 'Mih', 'Fah', 'Fa#h', 'Soh', 'So#h', 'Lahh')
@@ -192,6 +213,9 @@ if __name__ == ("__main__"):
 
   buzzer.stop()
   GPIO.cleanup()
+
+if __name__ == "__main__":
+  script()
 ```
 
 sound_script.pyを実行してみましょう。src下にあるDoremi.txt を実行してみます。ターミナルから以下のように実行します。

@@ -1,11 +1,10 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 # coding:utf-8
 
-import RPi.GPIO as GPIO
 import time
+import RPi.GPIO as GPIO
 
-if __name__ == ("__main__"):
-
+def led_pwm():
   LED1 = 18    # LED1 --> GPIO1(BCM:18,Physical:12)
 
   GPIO.setmode(GPIO.BCM)
@@ -33,3 +32,6 @@ if __name__ == ("__main__"):
   p18.stop()    # PWM出力を停止
 
   GPIO.cleanup()
+
+if __name__ == "__main__":
+  led_pwm()

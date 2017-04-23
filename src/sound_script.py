@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 # coding:utf-8
 
 import sys
@@ -6,7 +6,7 @@ import os.path
 import time
 import RPi.GPIO as GPIO
 
-if __name__ == ("__main__"):
+def script():
   argv = sys.argv
   argc = len(argv)
 
@@ -58,3 +58,6 @@ if __name__ == ("__main__"):
 
   buzzer.stop()
   GPIO.cleanup()
+
+if __name__ == "__main__":
+  script()

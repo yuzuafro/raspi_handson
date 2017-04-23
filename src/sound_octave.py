@@ -1,11 +1,10 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 # coding:utf-8
 
 import time
 import RPi.GPIO as GPIO
 
-if __name__ == ("__main__"):
-
+def octave():
   BZ1 = 4    # BZ1 --> GPIO7(BCM:4,Physical:7)
   GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
   GPIO.setup(BZ1, GPIO.OUT)    # BZ1を出力に設定
@@ -24,3 +23,6 @@ if __name__ == ("__main__"):
 
   buzzer.stop()
   GPIO.cleanup()
+
+if __name__ == "__main__":
+  octave()
