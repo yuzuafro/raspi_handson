@@ -107,13 +107,22 @@ Windowsの場合は、ターミナルソフトやVNCクライアントソフト�
 VNCクライアントを使用した接続方法はMacの場合と同様です。
 
 #### ターミナルソフト
-Tera Term がメジャーです。
+Tera Term などがあります。
 
 Tera Term : https://ttssh2.osdn.jp/
 
 #### VNCクライアントソフト
-Real VNC や Ultra VNC がメジャーなようです。
+Real VNC や Ultra VNC などがあります。
 
 Real VNC : https://www.realvnc.com/download/viewer/
 
 Ultra VNC : http://www.uvnc.com/downloads/ultravnc.html
+
+## IPアドレスを調べるのに便利なスマートフォンアプリ Fing
+スマートフォンアプリ Fing を使って、ネットワークに接続されている機器のIPアドレス、MACアドレスを簡単に調べることができます。
+
+iOS向け 
+https://itunes.apple.com/jp/app/fing-network-scanner/id430921107?mt=8
+
+Android向け 
+https://play.google.com/store/apps/details?id=com.overlook.android.fing&hl=ja

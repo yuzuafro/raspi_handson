@@ -71,8 +71,7 @@ def led_blink():
     while True:
 
       # 1秒点滅
-      GPIO.output(LED1, GPIO.HIGH)    # ポートにHighの信号を出力(LEDが点灯します
-)
+      GPIO.output(LED1, GPIO.HIGH)    # ポートにHighの信号を出力(LEDが点灯します)
       time.sleep(1)
 
       GPIO.output(LED1, GPIO.LOW)    # ポートにLowの信号を出力(LEDが消灯します)
