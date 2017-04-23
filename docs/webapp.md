@@ -90,6 +90,8 @@ Serving HTTP on port 8080
 PCのブラウザから、Raspberry Pi の 8080番ポートにアクセスしてみましょう。
 ```
 http://(Raspberry Pi の IPアドレス):8080
+または
+http://(Raspberry Pi の ホスト名.local):8080
 ```
 
 LED と Buzzer のボタンが見えています。(IPアドレスは環境によって変わります。)
@@ -107,7 +109,7 @@ LED と Buzzer のボタンが見えています。(IPアドレスは環境に�
 # おまけ(早く終わった人向け)
 WebOb の他にも、Webから Raspberry Pi を操作するためのフレームワークが提供されています。
 中でも、WebIOPi というフレームワークが最もメジャーなようです。
-(扱い方に少し癖があったので、紹介だけしておきます。)
+(インストール手順が多少複雑です。)
 
 ## WebIOPi のインストール
 
@@ -169,9 +171,14 @@ $ sudo systemctl start webiopi
 ブラウザから、Raspberry Pi の 8000番ポートにアクセスしてみましょう。
 ```
 http://(Raspberry Pi の IPアドレス):8000
+または
+http://(Raspberry Pi の ホスト名.local):8000
 ```
 
-このような画面が見えています。(IPアドレスは環境によって変わります。)
+認証画面が出てきます。
+初期設定は ユーザ名 webiopi、パスワード raspberry です。
+
+認証に成功するとこのような画面になります。(IPアドレスは環境によって変わります。)
 
 ![WebIOPiスクリーン](img/webiopi_screenshot.png)
 
@@ -266,7 +273,7 @@ $ vi sample/index.html
 
 /etc/webiopi/config の設定を変更します。
 ```bash
-$ sudo /etc/webiopi/config
+$ sudo vi /etc/webiopi/config
 ```
 
 config ファイル内の、myscript と doc-root を作成したファイル名のパスに置き換えます。
@@ -305,6 +312,8 @@ $ sudo systemctl start webiopi
 ブラウザから、Raspberry Pi の 8000番ポートにアクセスしてみましょう。
 ```
 http://(Raspberry Pi の IPアドレス):8000
+または
+http://(Raspberry Pi の ホスト名.local):8000
 ```
 
 LEDを操作するスライダが見えています。
