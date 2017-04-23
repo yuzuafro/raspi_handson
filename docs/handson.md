@@ -142,3 +142,12 @@ cd
 vi .vimrc
 (src/vim/.vimrcの内容を貼り付ける)
 ```
+
+### IPアドレスを調べるのに便利なスマートフォンアプリ Fing
+スマートフォンアプリ Fing を使って、ネットワークに接続されている機器のIPアドレス、MACアドレスを簡単に調べることができます。
+
+iOS向け 
+https://itunes.apple.com/jp/app/fing-network-scanner/id430921107?mt=8
+
+Android向け 
+https://play.google.com/store/apps/details?id=com.overlook.android.fing&hl=ja
