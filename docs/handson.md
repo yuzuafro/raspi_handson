@@ -151,3 +151,7 @@ https://itunes.apple.com/jp/app/fing-network-scanner/id430921107?mt=8
 
 Android向け 
 https://play.google.com/store/apps/details?id=com.overlook.android.fing&hl=ja
+
+## 昔の Raspbian(PIXELじゃないもの) のインストール方法
+- [NOOBSを使用したOSインストールと初期設定](docs/prepare.md)
+- [VNCを使用したリモートアクセスの設定](docs/prepare_vnc.md)

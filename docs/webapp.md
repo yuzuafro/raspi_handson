@@ -105,6 +105,10 @@ LED と Buzzer のボタンが見えています。(IPアドレスは環境に�
 
 プログラムを終了する時は、webapp.py のプログラムを実行しているターミナルで、Ctrl + c を入力します。
 
+## さらに挑戦
+* LED On、LED Off、Buzzer On、Buzzer Off のボタンを作成し、それぞれの処理をブラウザから実行できるようにしてみましょう。
+(src/webapp2.py、src/parts.py にソースコードがあります。)
+
 
 # おまけ(早く終わった人向け)
 WebOb の他にも、Webから Raspberry Pi を操作するためのフレームワークが提供されています。
