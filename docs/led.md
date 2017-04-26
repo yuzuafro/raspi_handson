@@ -4,7 +4,7 @@
 
 Pythonを使ってLEDを点灯させるプログラム led_on.py を作成します。
 
-まず適当なディレクトリを作成し、その中にファイルを作成していきましょう。
+まず適当なディレクトリ(ここでは handson)を作成し、その中にファイルを作成していきましょう。
 
 ```bash
 $ mkdir handson
@@ -16,25 +16,32 @@ $ vi led_on.py
 #!/usr/bin/env python
 # coding:utf-8
 
-import time
-import RPi.GPIO as GPIO
+import time                     # time モジュールをインポート
+import RPi.GPIO as GPIO         # RPi.GPIO パッケージを GPIO としてインポート
 
-def led_on():
-  LED1 = 18    # LED1 --> GPIO1(BCM:18,Physical:12)
+def led_on():                   # 関数 led_on を定義
+  LED1 = 18                     # LED1 --> GPIO1(BCM:18,Physical:12)
 
-  GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
-  GPIO.setup(LED1, GPIO.OUT)    # LED1を出力に設定
+  GPIO.setmode(GPIO.BCM)        # BCMのポート番号を使用
+  GPIO.setup(LED1, GPIO.OUT)    # LED1をOUTPUTモード(出力モード)に設定
 
-  GPIO.output(LED1, GPIO.HIGH)    # ポートにHighの信号を出力(LEDが点灯します)
-  time.sleep(2)
+  GPIO.output(LED1, GPIO.HIGH)  # ポートにHighの信号を出力(LEDが点灯します)
+  time.sleep(2)                 # 2秒スリープ
 
-  GPIO.output(LED1, GPIO.LOW)    # ポートにLowの信号を出力(LEDが消灯します)
+  GPIO.output(LED1, GPIO.LOW)   # ポートにLowの信号を出力(LEDが消灯します)
 
-  GPIO.cleanup()
+  GPIO.cleanup()                # GPIOポートの撤収処理
 
 if __name__ == "__main__":
   led_on()
 ```
+
+* ソースコード作成時の注意
+  * Python ではインデント(字下げ)でブロックを表現します。
+  * 2行目の "# coding:utf-8" を書かないと日本語のコメントがエラーになります。
+
+* RPi.GPIOパッケージのドキュメント
+https://sourceforge.net/p/raspberry-gpio-python/wiki/Examples/
 
 led_on.pyを実行してみましょう。ターミナルから以下のように実行します。
 ```bash
@@ -58,30 +65,30 @@ $ vi led_blink.py
 #!/usr/bin/env python
 # coding:utf-8
 
-import time
-import RPi.GPIO as GPIO    # RPi.GPIOパッケージのインポート
+import time                           # time モジュールをインポート
+import RPi.GPIO as GPIO               # RPi.GPIO パッケージを GPIO としてインポート
 
 def led_blink():
-  LED1 = 18    # LED1 --> GPIO1(BCM:18,Physical:12)
+  LED1 = 18                           # LED1 --> GPIO1(BCM:18,Physical:12)
 
-  GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
-  GPIO.setup(LED1, GPIO.OUT)     # LED1を出力に設定
+  GPIO.setmode(GPIO.BCM)              # BCMのポート番号を使用
+  GPIO.setup(LED1, GPIO.OUT)          # LED1を出力に設定
 
   try:
-    while True:
+    while True:                       # 無限ループ
 
       # 1秒点滅
       GPIO.output(LED1, GPIO.HIGH)    # ポートにHighの信号を出力(LEDが点灯します)
-      time.sleep(1)
+      time.sleep(1)                   # 1秒スリープ
 
-      GPIO.output(LED1, GPIO.LOW)    # ポートにLowの信号を出力(LEDが消灯します)
-      time.sleep(1)
+      GPIO.output(LED1, GPIO.LOW)     # ポートにLowの信号を出力(LEDが消灯します)
+      time.sleep(1)                   # 1秒スリープ
 
   # ctrl+c を受け取った場合
   except KeyboardInterrupt:
       print ('key interrupt')
 
-  GPIO.cleanup()    # GPIOポートの撤収処理
+  GPIO.cleanup()                      # GPIOポートの撤収処理
 
 if __name__ == "__main__":
   led_blink()
@@ -100,7 +107,10 @@ $ python led_blink.py
 これをデジタル出力と言います。
 
 一方、アナログ出力(PWM制御)では、LEDの点灯時の明るさを変更することができます。
+
 Raspberry PiのGPIOポートでは、ソフトウェアPWMを使用することができます。
+
+PWM制御では周波数とデューティ比を設定して波形を制御できます。
 
 LEDの明るさを変更するプログラム led_pwm.py を作成します。
 
@@ -116,14 +126,14 @@ import time
 import RPi.GPIO as GPIO
 
 def led_pwm():
-  LED1 = 18    # LED1 --> GPIO1(BCM:18,Physical:12)
+  LED1 = 18                     # LED1 --> GPIO1(BCM:18,Physical:12)
 
   GPIO.setmode(GPIO.BCM)
   GPIO.setup(LED1, GPIO.OUT)
   GPIO.output(LED1, GPIO.LOW)
 
-  p18 = GPIO.PWM(LED1, 100)    # LED1の周波数設定(100Hz)
-  p18.start(0)    # デューティ比 0 でPWM出力開始
+  p18 = GPIO.PWM(LED1, 100)     # LED1の周波数設定(100Hz)
+  p18.start(0)                  # デューティ比 0 でPWM出力開始
 
   try:
     while 1:
@@ -132,7 +142,7 @@ def led_pwm():
         p18.ChangeDutyCycle(dc)
         time.sleep(0.5)
 
-      # 100〜0まで10段階でデューティ日を設定(マイナス方向)
+      # 100〜0まで10段階でデューティ比を設定(マイナス方向)
       for dc in range(100, 0, -10):
         p18.ChangeDutyCycle(dc)
         time.sleep(0.5)
@@ -140,7 +150,7 @@ def led_pwm():
   except KeyboardInterrupt:
       print ('key interrupt')
 
-  p18.stop()    # PWM出力を停止
+  p18.stop()                      # PWM出力を停止
 
   GPIO.cleanup()
 
@@ -156,7 +166,7 @@ $ python led_pwm.py
 * LEDの明るさが10段階で変化します。ctrl+c のキー入力で終了します。
 * 周波数やデューティ比の設定を変更してみましょう。
   * 周波数に100Hzを設定しています。１秒間に100回のHigh/Lowを行います。
-  * デューティ比の単位はパーセントです。0〜100の値を指定します。
+  * デューティ比の単位はパーセントです。1周期におけるHighの比率となっており、0〜100の値を指定します。
 
 ## 抵抗値の求め方
 今回は1kΩの抵抗を使用しましたが、使用するLEDの特性に合わせて抵抗値を算出する必要があります。

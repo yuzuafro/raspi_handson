@@ -1,5 +1,6 @@
 # 本日のハンズオンについて
 ## 今日のゴール
+「初めてのRaspberry Pi 電子工作」 LED＆ブザーを使って、IoTを体験しよう！
 * Webブラウザから、Raspberry Pi に接続された LED やブザーを操作します。
 
 ## 今日やること
@@ -8,9 +9,21 @@
 * Python を使って、部品を動作させるプログラムを作成します。
 * Webブラウザから、Raspberry Pi にアクセスする環境を整えます。
 
+## 持ち物が揃っているかの確認
+### 本日お持ちいただいているもの
+* PC
+* Raspberry Pi 3 本体
+* Raspbian OSインストール済みのmicroSDカード
+* 電源アダプタ(またはmicroUSBケーブル+USB急速充電器)
+
+### 貸し出ししているもの
+* 電子工作部品一式(後ほど中身の確認をします。)
+
 ## 事前準備ができているかの確認
 ### WiFi接続と設定の確認
 * 1人ずつディスプレイに接続して起動し、会場のWiFiに接続します。
+
+### MACアドレスの確認
 * ターミナルを起動し、ifconfig コマンドで、MACアドレスを確認します。wlan0 のハードウェアアドレスをメモします。
 ```bash
 $ ifconfig
@@ -19,16 +32,22 @@ wlan0     Link encap:イーサネット  ハードウェアアドレス xx:xx:xx
           inetアドレス:192.168.xx.xx ブロードキャスト:192.168.0.255  マスク:255.255.255.0
 ...
 ```
-* (PIXELじゃない人向け)VNCServerがインストールされているかを確認します。
+
+### VNCServerの確認
+#### PIXELじゃない人向け
+* VNCServerがインストールされているかを確認します。
 ```bash
 $ which vncserver
 ```
 インストールされていない場合は、後ほどインストールします。
-* (PIXELの人向け)
+
+#### PIXELの人向け
 * VNC Server の Options を起動します。
     * Security
         * Authentication: UNIX password → VNC password に変更
         * Applyボタンを押下します。パスワード設定画面が表示されるのでパスワードを設定します。
+
+### その他の設定
 * 設定 → Raspberry Piの設定メニューを起動します。
     * システム
         * パスワードを変更(raspberry以外を推奨)
@@ -121,6 +140,7 @@ Raspberry Piのsshのターミナルで以下のように入力します。
 ```bash
 $ vncserver -kill :1
 ```
+
 ##### sshの認証方法について
 * sshの認証方法には、パスワード認証方式と公開鍵認証方式があります。
 * Raspberry Pi の VNC Server の設定では、パスワード認証が VNC password、公開鍵認証が UNIX password という名前になっています。

@@ -15,19 +15,19 @@ import time
 import RPi.GPIO as GPIO
 
 def buzzer():
-  BZ1 = 4    # BZ1 --> GPIO7(BCM:4,Physical:7)
+  BZ1 = 4                       # BZ1 --> GPIO7(BCM:4,Physical:7)
 
-  GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
-  GPIO.setup(BZ1, GPIO.OUT)    # BZ1を出力に設定
-  buzzer = GPIO.PWM(BZ1, 440)    # BZ1の周波数設定(440Hz)
+  GPIO.setmode(GPIO.BCM)        # BCMのポート番号を使用
+  GPIO.setup(BZ1, GPIO.OUT)     # BZ1をOUTPUTモード(出力モード)に設定
+  buzzer = GPIO.PWM(BZ1, 440)   # BZ1の周波数設定(440Hz)
 
-  buzzer.start(50)    # デューティ比 50 でPWM出力開始
+  buzzer.start(50)              # デューティ比 50 でPWM出力開始
 
   time.sleep(1)
 
-  buzzer.stop()    # PWM出力を停止
+  buzzer.stop()                 # PWM出力を停止
 
-  GPIO.cleanup()    # GPIOポートの撤収処理
+  GPIO.cleanup()                # GPIOポートの撤収処理
 
 if __name__ == "__main__":
   buzzer()
@@ -40,6 +40,7 @@ $ python sound_buzzer.py
 
 * ブザー音が1秒鳴り、終了します。
 * ここでは、440Hzの音を1秒間出力しています。440Hzはラの音です。
+  * 一般的に、20Hz〜20000Hz程度が人間の聴くことのできる音とされています。
 
 ### 音階を出力するプログラム
 
@@ -56,18 +57,18 @@ import time
 import RPi.GPIO as GPIO
 
 def octave():
-  BZ1 = 4    # BZ1 --> GPIO7(BCM:4,Physical:7)
-  GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
-  GPIO.setup(BZ1, GPIO.OUT)    # BZ1を出力に設定
+  BZ1 = 4                           # BZ1 --> GPIO7(BCM:4,Physical:7)
+  GPIO.setmode(GPIO.BCM)            # BCMのポート番号を使用
+  GPIO.setup(BZ1, GPIO.OUT)         # BZ1を出力に設定
 
   tonename = ['La', 'La#', 'Si', 'Do', 'Do#', 'Re', 'Re#', 'Mi', 'Fa', 'Fa#', 'So', 'So#']
 
-  freq = 220.0    # 220Hz(低いラの音)
+  freq = 220.0                      # 220Hz(低いラの音)
   buzzer = GPIO.PWM(BZ1, freq)
-  buzzer.start(50)    # デューティ比 50 でPWM出力開始
+  buzzer.start(50)                  # デューティ比 50 でPWM出力開始
 
   for i in range(0, 13):
-    freq = 220.0 * (2 ** (i/12.0))
+    freq = 220.0 * (2 ** (i/12.0))  # 220 * (2 の i/12乗)
     print '%3s : %.1f Hz' % (tonename[i%12], freq)
     buzzer.ChangeFrequency(freq)    # 周波数を変更
     time.sleep(0.2)
@@ -84,6 +85,7 @@ sound_octave.pyを実行してみましょう。ターミナルから以下の�
 $ python sound_octave.py
 ```
 * ブザー音が1オクターブ分鳴り、終了します。
+  * 音を半音上げるためには、元の音に 2 の 1/12乗をかけた周波数を設定します。
 
 ### ターミナルに入力した音を鳴らすプログラム
 
@@ -100,15 +102,15 @@ import time
 import RPi.GPIO as GPIO
 
 def input():
-  BZ1 = 4    # BZ1 --> GPIO7(BCM:4,Physical:7)
-  GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
+  BZ1 = 4                      # BZ1 --> GPIO7(BCM:4,Physical:7)
+  GPIO.setmode(GPIO.BCM)       # BCMのポート番号を使用
   GPIO.setup(BZ1, GPIO.OUT)    # BZ1を出力に設定
 
   tonename = ('La', 'La#', 'Si', 'Do', 'Do#', 'Re', 'Re#', 'Mi', 'Fa', 'Fa#', 'So', 'So#')
   toneall = ('La', 'La#', 'Si', 'Do', 'Do#', 'Re', 'Re#', 'Mi', 'Fa', 'Fa#', 'So', 'So#', 'Lah', 'La#h', 'Sih', 'Doh', 'Do#h', 'Reh', 'Re#h', 'Mih', 'Fah', 'Fa#h', 'Soh', 'So#h', 'Lahh')
 
   freq_dict = {}
-  freq_base = 220.0    # 220Hz(低いラの音)
+  freq_base = 220.0            # 220Hz(低いラの音)
 
   for i in range(0, len(toneall)):
     freq_dict[toneall[i]] = freq_base * (2 ** (i/float(len(tonename))))
@@ -119,7 +121,7 @@ def input():
       tone = raw_input()
       if tone in freq_dict:
         buzzer = GPIO.PWM(BZ1, freq_dict[tone])
-        buzzer.start(50)    # デューティ比 50 でPWM出力開始
+        buzzer.start(50)       # デューティ比 50 でPWM出力開始
         time.sleep(0.5)
         buzzer.stop()
       else: 
@@ -175,15 +177,15 @@ def script():
     print 'file "%s" is not found' % argv[1]
     quit()
 
-  BZ1 = 4    # BZ1 --> GPIO7(BCM:4,Physical:7)
-  GPIO.setmode(GPIO.BCM)    # BCMのポート番号を使用
+  BZ1 = 4                      # BZ1 --> GPIO7(BCM:4,Physical:7)
+  GPIO.setmode(GPIO.BCM)       # BCMのポート番号を使用
   GPIO.setup(BZ1, GPIO.OUT)    # BZ1を出力に設定
 
   tonename = ('La', 'La#', 'Si', 'Do', 'Do#', 'Re', 'Re#', 'Mi', 'Fa', 'Fa#', 'So', 'So#')
   toneall = ('La', 'La#', 'Si', 'Do', 'Do#', 'Re', 'Re#', 'Mi', 'Fa', 'Fa#', 'So', 'So#', 'Lah', 'La#h', 'Sih', 'Doh', 'Do#h', 'Reh', 'Re#h', 'Mih', 'Fah', 'Fa#h', 'Soh', 'So#h', 'Lahh')
 
   freq_dict = {}
-  freq_base = 220.0    # 220Hz(低いラの音)
+  freq_base = 220.0            # 220Hz(低いラの音)
 
   # 2オクターブ分の周波数情報を作成
   for i in range(0, len(toneall)):
@@ -196,7 +198,7 @@ def script():
   f.close()
 
   buzzer = GPIO.PWM(BZ1, freq_base)
-  buzzer.start(50)    # デューティ比 50 でPWM出力開始
+  buzzer.start(50)             # デューティ比 50 でPWM出力開始
 
   # 音を鳴らす
   try:
