@@ -34,14 +34,27 @@ wlan0     Link encap:イーサネット  ハードウェアアドレス xx:xx:xx
 ```
 
 ### VNCServerの確認
-#### PIXELじゃない人向け
+####  Raspbian OSのバージョンの確認
+* VNCServerの確認をする前に、Raspbian OSのバージョン確認をします。  
+ターミナルに以下のコマンドを入力して、OSのバージョンを確認します。
+```bash
+$ lsb_release -a
+No LSB modules are available.
+Distributor ID:	Raspbian
+Description:	Raspbian GNU/Linux 8.0 (jessie)
+Release:	8.0
+Codename:	jessie
+```
+この場合は、Raspbian jessie がインストールされています。
+
+#### Raspbian wheezy 以前のバージョンを使用している場合
 * VNCServerがインストールされているかを確認します。
 ```bash
 $ which vncserver
 ```
 インストールされていない場合は、後ほどインストールします。
 
-#### PIXELの人向け
+#### Raspbian jessie 以降のバージョンを使用している場合
 * VNC Server の Options を起動します。
     * Security
         * Authentication: UNIX password → VNC password に変更
@@ -52,6 +65,7 @@ $ which vncserver
     * システム
         * パスワードを変更(raspberry以外を推奨)
         * ホスト名を設定(raspberrypi以外を推奨)
+            * hostname には "-"(ハイフン)以外の記号を使用することはできません。("_"アンダースコアなどは使用できません)
     * インターフェイス
         * SSH、VNC、リモートGPIO を有効にします。
     * ローカライゼーション
@@ -123,7 +137,7 @@ vnc://192.168.0.10:5901
 
 パスワードを入力すると、リモート画面が起動します。
 
-Windowsの人は、RealVNC Viewer を起動して、同様に入力します。
+Windowsの人は、VNC Viewer を起動して、同様に入力します。
 
 Mac の画面共有がうまくできない場合は、設定が正しくない可能性があります。
 
@@ -133,7 +147,7 @@ https://pc-karuma.net/mac-screen-sharing/
 
 https://support.apple.com/kb/PH21800?viewlocale=ja_JP&locale=ja_JP
 
-vncserver を終了させる時は、クライアント(画面共有やRealVNC Viewer)を落として、
+vncserver を終了させる時は、クライアント(画面共有やVNC Viewer)を落として、
 Raspberry Piのsshのターミナルで以下のように入力します。
 
 (:1 の部分に起動したvncserverの番号が入ります。)
@@ -145,7 +159,7 @@ $ vncserver -kill :1
 * sshの認証方法には、パスワード認証方式と公開鍵認証方式があります。
 * Raspberry Pi の VNC Server の設定では、パスワード認証が VNC password、公開鍵認証が UNIX password という名前になっています。
 * 公開鍵認証方式の方が安全性が高いというメリットがありますが、設定が少し面倒だったり、Mac の画面共有メニューでは使えないデメリットがあります。
-* 公開鍵認証方式を使用したい場合は、PCに RealVNC Viewer をインストールすれば使用できます。
+* 公開鍵認証方式を使用したい場合は、PCに VNC Viewer をインストールすれば使用できます。
 
 ## その他もろもろ
 ### rootユーザのパスワード設定
@@ -181,6 +195,6 @@ https://itunes.apple.com/jp/app/fing-network-scanner/id430921107?mt=8
 Android向け 
 https://play.google.com/store/apps/details?id=com.overlook.android.fing&hl=ja
 
-## 昔の Raspbian(PIXELじゃないもの) のインストール方法
-- [NOOBSを使用したOSインストールと初期設定](docs/prepare.md)
-- [VNCを使用したリモートアクセスの設定](docs/prepare_vnc.md)
+## 昔の Raspbian(wheezy以前) のインストール方法
+- [NOOBSを使用したOSインストールと初期設定](./prepare.md)
+- [VNCを使用したリモートアクセスの設定](./prepare_vnc.md)
