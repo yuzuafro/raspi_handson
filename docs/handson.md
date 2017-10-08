@@ -15,16 +15,15 @@
 * Raspberry Pi 3 本体
 * Raspbian OSインストール済みのmicroSDカード
 * 電源アダプタ(またはmicroUSBケーブル+USB急速充電器)
-
-### 貸し出ししているもの
 * 電子工作部品一式(後ほど中身の確認をします。)
 
 ## 事前準備ができているかの確認
 ### WiFi接続と設定の確認
-* 1人ずつディスプレイに接続して起動し、会場のWiFiに接続します。
+* 1人ずつRaspberry Piにディスプレイ、マウス、キーボードを接続して起動し、会場のWiFiに接続します。
+* Raspberry Piのデスクトップ画面の右上の方にあるネットワーク設定のメニューから、会場のWiFiを選択してパスワードを入力します。
 
-### MACアドレスの確認
-* ターミナルを起動し、ifconfig コマンドで、MACアドレスを確認します。wlan0 のハードウェアアドレスをメモします。
+### MACアドレス、IPアドレスの確認
+* ターミナルを起動し、ifconfig コマンドで、MACアドレス、IPアドレスを確認します。wlan0 のハードウェアアドレス(MACアドレス)、inetアドレス(IPアドレス)をメモします。
 ```bash
 $ ifconfig
 ...
@@ -32,35 +31,10 @@ wlan0     Link encap:イーサネット  ハードウェアアドレス xx:xx:xx
           inetアドレス:192.168.xx.xx ブロードキャスト:192.168.0.255  マスク:255.255.255.0
 ...
 ```
+* MACアドレスは常に同じ値ですが、IPアドレスは途中で変わってしまう可能性があります。  
+その際はMACアドレスからIPアドレスを検索しますので、念のためMACアドレスもメモしています。
 
-### VNCServerの確認
-####  Raspbian OSのバージョンの確認
-* VNCServerの確認をする前に、Raspbian OSのバージョン確認をします。  
-ターミナルに以下のコマンドを入力して、OSのバージョンを確認します。
-```bash
-$ lsb_release -a
-No LSB modules are available.
-Distributor ID:	Raspbian
-Description:	Raspbian GNU/Linux 8.0 (jessie)
-Release:	8.0
-Codename:	jessie
-```
-この場合は、Raspbian jessie がインストールされています。
-
-#### Raspbian wheezy 以前のバージョンを使用している場合
-* VNCServerがインストールされているかを確認します。
-```bash
-$ which vncserver
-```
-インストールされていない場合は、後ほどインストールします。
-
-#### Raspbian jessie 以降のバージョンを使用している場合
-* VNC Server の Options を起動します。
-    * Security
-        * Authentication: UNIX password → VNC password に変更
-        * Applyボタンを押下します。パスワード設定画面が表示されるのでパスワードを設定します。
-
-### その他の設定
+### Raspberry Piの設定
 * 設定 → Raspberry Piの設定メニューを起動します。
     * システム
         * パスワードを変更(raspberry以外を推奨)
@@ -68,16 +42,25 @@ $ which vncserver
             * hostname には "-"(ハイフン)以外の記号を使用することはできません。("_"アンダースコアなどは使用できません)
     * インターフェイス
         * SSH、VNC、リモートGPIO を有効にします。
+        * (カメラ以外全て有効にしておいてよいと思います。)
     * ローカライゼーション
         * 4項目全て、日本に設定します。
-* 再起動します。再起動できたら、シャットダウンして、PCからの確認に移ります。
+* 再起動します。再起動できたら、シャットダウンして、PCからの確認に移ります。  
+(問題なければ次の方に場所を譲りましょう。)
 
 ### PCからの接続の確認
 #### sshの確認
-* PCからsshでログインします。PCのターミナルを起動します。(Windowsの人はTera Termなど)
+* PCのターミナルアプリケーションを起動します。  
+Windowsの人はTera TermやPuttyなどのアプリケーションを起動します。  
+なければインストールしてください。  
+Tera Term : https://ttssh2.osdn.jp/  
+Putty : http://www.putty.org/  
+Macの人はターミナルを起動します。  
+
+* sshでログインします。  
 ユーザ名は特に変更していない場合は pi になります。
 ```bash
-$ ssh (Raspberry Pi の ユーザ名)@(Raspberry Pi の ホスト名.local)
+$ ssh (Raspberry Pi の ユーザ名)@(Raspberry Pi の ホスト名).local
 または
 $ ssh (Raspberry Pi の ユーザ名)@(Raspberry Pi の IPアドレス)
 ```
@@ -103,6 +86,39 @@ permitted by applicable law.
 Last login: Sun Apr xx xx:xx:xx 2017 from 192.xxx.x.x
 ```
 
+Raspberry PiにログインできればOKです。  
+
+### VNC の環境設定
+今回のハンズオンでは必須ではないのですが、Raspberry PiにPCからVNCで接続できるようにしておくと、
+PCからRaspberry PiのGUIが使えて便利ですので設定しておくのがオススメです。  
+
+### VNC Viewerのインストール(PC)
+* PCにVNC Viewerをインストールします。  
+https://www.realvnc.com/en/connect/download/viewer/
+  * PCにインストールするのはVNC Viewer(VNCクライアントアプリケーション)です。  
+  VNC Connect(VNCサーバアプリケーション)をインストールしないように注意しましょう。
+
+### VNCServerの確認(Raspberry Pi)
+####  Raspbian OSのバージョンの確認
+* VNCServerの確認をする前に、Raspbian OSのバージョン確認をします。  
+ターミナルに以下のコマンドを入力して、OSのバージョンを確認します。
+```bash
+$ lsb_release -a
+No LSB modules are available.
+Distributor ID:	Raspbian
+Description:	Raspbian GNU/Linux 8.0 (jessie)
+Release:	8.0
+Codename:	jessie
+```
+この場合は、Raspbian jessie がインストールされています。
+
+#### Raspbian wheezy 以前のバージョンを使用している場合
+* VNC Server はデフォルトではインストールされていません。  
+次のステップでインストールします。
+
+#### Raspbian jessie 以降のバージョンを使用している場合
+* VNC Server がインストールされています。
+
 #### VNCの確認
 ssh で接続しているターミナルから vncserver コマンドがインストールされているか確認します。
 
@@ -118,6 +134,7 @@ $ which vncserver
 $ sudo apt-get install vncserver
 ```
 
+### VNC Server の起動
 インストールができたら、vncserver を起動します。
 ```bash
 $ vncserver
@@ -126,28 +143,25 @@ Log file is /home/pi/.vnc/yuzuafro:1.log
 New desktop is yuzuafro:1 (192.168.0.10:1)
 ```
 
-最後に、起動したVNCの番号が出力されます。
+最後に、起動したVNCの番号が出力されます。  
+この場合は1番となっています。(ポートの番号は5901番になります。)
 
-Macの人は、画面共有(Finder → 移動 → サーバへ接続) に以下のように入力し、接続を選択します。
+### VNC Client からアクセスする
+最後にPCからアクセスします。  
+VNC Viewer を起動します。
+
+File → New Connection で出てくる Properties メニューの General タブを選択します。  
+VNC Server に以下のように入力します。(1番の場合)
 ```bash
-vnc://yuzuafro.local:5901
+VNC Server: (Raspberry Pi の ホスト名).local:5901
 または
-vnc://192.168.0.10:5901
+VNC Server: (Raspberry Pi の IPアドレス):5901
 ```
 
-パスワードを入力すると、リモート画面が起動します。
+ユーザ名とパスワードを入力すると、リモート画面が起動します。
+(ここのユーザ名は変更していなければ、piです。)
 
-Windowsの人は、VNC Viewer を起動して、同様に入力します。
-
-Mac の画面共有がうまくできない場合は、設定が正しくない可能性があります。
-
-この辺りのページを参考に確認してみてください。
-
-https://pc-karuma.net/mac-screen-sharing/
-
-https://support.apple.com/kb/PH21800?viewlocale=ja_JP&locale=ja_JP
-
-vncserver を終了させる時は、クライアント(画面共有やVNC Viewer)を落として、
+vncserver を終了させる時は、クライアント(VNC Viewer)を落として、
 Raspberry Piのsshのターミナルで以下のように入力します。
 
 (:1 の部分に起動したvncserverの番号が入ります。)
@@ -158,10 +172,22 @@ $ vncserver -kill :1
 ##### sshの認証方法について
 * sshの認証方法には、パスワード認証方式と公開鍵認証方式があります。
 * Raspberry Pi の VNC Server の設定では、パスワード認証が VNC password、公開鍵認証が UNIX password という名前になっています。
-* 公開鍵認証方式の方が安全性が高いというメリットがありますが、設定が少し面倒だったり、Mac の画面共有メニューでは使えないデメリットがあります。
-* 公開鍵認証方式を使用したい場合は、PCに VNC Viewer をインストールすれば使用できます。
+* デフォルトは UNIX password になっていますが、Raspberry Pi側の VNC Server の Option 設定で変更できます。
+* 公開鍵認証の方がオススメです。
 
 ## その他もろもろ
+### CUIからのインターフェイス設定変更方法
+sshのみでPCからRaspberry Piに接続されている方は、raspi-configメニューでインターフェイス設定を変更することができます。
+```bash
+$ sudo raspi-config
+```
+灰色のconfig画面が起動します。
+
+矢印キーで、「5 Interfacing Options」を選択し、Enterを押下します。  
+「P2 SSH」を選択し、「Would you like the SSH server to be enabled?」に「＜はい＞」を選択します。  
+同様に「P8 Remote GPIO」も Enable に変更します。  
+すべての設定を終えたら「＜Finish＞」を選択し、再起動します。  
+
 ### rootユーザのパスワード設定
 インストール後、特に設定をしないと、root のパスワードは設定されていません。
 
