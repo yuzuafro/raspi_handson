@@ -176,6 +176,13 @@ $ vncserver -kill :1
 * 公開鍵認証の方がオススメです。
 
 ## その他もろもろ
+### 資料、ソースコード
+* https://github.com/yuzuafro/raspi_handson
+* Raspberr Pi 上で git clone すれば、そのまま使用できます。
+```bash
+$ git clone https://github.com/yuzuafro/raspi_handson
+```
+
 ### CUIからのインターフェイス設定変更方法
 sshのみでPCからRaspberry Piに接続されている方は、raspi-configメニューでインターフェイス設定を変更することができます。
 ```bash

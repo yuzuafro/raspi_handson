@@ -9,7 +9,7 @@ WebObモジュールをインストールします。
 ターミナルに以下のように入力します。
 
 ```bash
-$ sudo pip install WebOb
+$ sudo pip3 install WebOb
 ```
 
 ### WebOb の公式サイト
@@ -69,17 +69,17 @@ if __name__ == "__main__":
   # 8080番ポートを使用する
   port = 8080
   httpd = make_server('', port, application)
-  print 'Serving HTTP on port %d' % port
+  print ('Serving HTTP on port %d' % port)
 
   try:
     httpd.serve_forever()
   except KeyboardInterrupt:
-    print 'Key Interrupt'
+    print ('Key Interrupt')
 ```
 
 webapp.py を実行してみましょう。ターミナルから以下のように実行します。
 ```bash
-$ python webapp.py
+$ python3 webapp.py
 ```
 
 以下のメッセージが出力され、Webサーバが開始されます。
@@ -102,6 +102,7 @@ LED と Buzzer のボタンが見えています。(IPアドレスは環境に�
 * Buzzerボタンを押下すると、Buzzerが2秒間鳴ります。
 
 スマートフォンをお持ちの方は、スマートフォンからも接続してみましょう。(Raspberry Piと同じネットワークに接続してください。)
+また、他の人のアドレスを教えてもらって、LEDやブザーの操作をしてみましょう。
 
 プログラムを終了する時は、webapp.py のプログラムを実行しているターミナルで、Ctrl + c を入力します。
 

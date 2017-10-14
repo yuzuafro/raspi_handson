@@ -13,7 +13,7 @@ def switch():
   try:
     while True:
       state = GPIO.input(SW1)    # SW1の状態を読み込む(0:Low、1:High)
-      print 'SW: %d' % state
+      print ('SW: %d' % state)
 
       time.sleep(1)
 

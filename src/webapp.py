@@ -39,10 +39,10 @@ if __name__ == "__main__":
   # 8080番ポートを使用する
   port = 8080
   httpd = make_server('', port, application)
-  print 'Serving HTTP on port %d' % port
+  print ('Serving HTTP on port %d' % port)
 
   try:
     httpd.serve_forever()
   except KeyboardInterrupt:
-    print 'Key Interrupt'
+    print ('Key Interrupt')
 

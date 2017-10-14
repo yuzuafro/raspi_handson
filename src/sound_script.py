@@ -12,12 +12,12 @@ def script():
 
   # 引数の確認
   if (argc != 2):
-    print 'usage: python %s filename' % argv[0]
+    print ('usage: python %s filename' % argv[0])
     quit()
 
   # ファイルの存在チェック
   if not os.path.exists(argv[1]):
-    print 'file "%s" is not found' % argv[1]
+    print ('file "%s" is not found' % argv[1])
     quit()
 
   BZ1 = 4    # BZ1 --> GPIO7(BCM:4,Physical:7)
@@ -33,7 +33,7 @@ def script():
   # 2オクターブ分の周波数情報を作成
   for i in range(0, len(toneall)):
     freq_dict[toneall[i]] = freq_base * (2 ** (i/float(len(tonename))))
-    #print '%3s : %.1f Hz' % (tonename[i%len(tonename)], freq_dict[toneall[i]])
+    #print ('%3s : %.1f Hz' % (tonename[i%len(tonename)], freq_dict[toneall[i]]))
 
   # ファイルを読み込む
   f = open(argv[1])
@@ -47,14 +47,14 @@ def script():
   try:
     for line in soundsall:
         sounds = line.split(',')
-        print sounds
+        print (sounds)
         for tone in sounds:
           if tone in freq_dict:
             buzzer.ChangeFrequency(freq_dict[tone])
             time.sleep(0.2)
 
   except KeyboardInterrupt:
-    print 'key interrupt'
+    print ('key interrupt')
 
   buzzer.stop()
   GPIO.cleanup()

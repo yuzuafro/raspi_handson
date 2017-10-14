@@ -24,7 +24,7 @@ def switch():
   try:
     while True:
       state = GPIO.input(SW1)                           # SW1の状態を読み込む(0:Low、1:High)
-      print 'SW: %d' % state
+      print ('SW: %d' % state)
 
       time.sleep(1)
 
@@ -37,7 +37,7 @@ if __name__ == "__main__":
 
 switch.pyを実行してみましょう。ターミナルから以下のように実行します。
 ```bash
-$ python switch.py
+$ python3 switch.py
 SW: 1
 SW: 1
 SW: 0

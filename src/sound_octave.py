@@ -17,7 +17,7 @@ def octave():
 
   for i in range(0, 13):
     freq = 220.0 * (2 ** (i/12.0))
-    print '%3s : %.1f Hz' % (tonename[i%12], freq)
+    print ('%3s : %.1f Hz' % (tonename[i%12], freq))
     buzzer.ChangeFrequency(freq)    # 周波数を変更
     time.sleep(0.2)
 

@@ -45,7 +45,7 @@ https://sourceforge.net/p/raspberry-gpio-python/wiki/Examples/
 
 led_on.pyを実行してみましょう。ターミナルから以下のように実行します。
 ```bash
-$ python led_on.py
+$ python3 led_on.py
 ```
 
 * LEDが2秒点灯して終了します。
@@ -96,7 +96,7 @@ if __name__ == "__main__":
 　
 led_blink.pyを実行してみましょう。ターミナルから以下のように実行します。
 ```bash
-$ python led_blink.py
+$ python3 led_blink.py
 ```
 
 * LEDが1秒ごとに点滅します。ctrl+c のキー入力で終了します。
@@ -160,7 +160,7 @@ if __name__ == "__main__":
 
 led_pwm.pyを実行してみましょう。ターミナルから以下のように実行します。
 ```bash
-$ python led_pwm.py
+$ python3 led_pwm.py
 ```
 
 * LEDの明るさが10段階で変化します。ctrl+c のキー入力で終了します。
